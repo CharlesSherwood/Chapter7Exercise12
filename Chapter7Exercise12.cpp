@@ -36,6 +36,8 @@ int main()
 
 
 }
+
+
 int Menu()
 {
 	int Choice;
@@ -89,6 +91,7 @@ int Menu()
 }
 
 
+
 void welcome()
 {
 	cout << "--------------------------------------\n";
@@ -96,6 +99,7 @@ void welcome()
 	cout << "--------------------------------------\n";
 
 }
+
 void GetInfo()
 {
 	const int Size = 50;
@@ -114,6 +118,8 @@ void GetInfo()
 
 
 }
+
+
 int NumberOfStudents()
 {
 	int NumOfStudents;
@@ -121,19 +127,28 @@ int NumberOfStudents()
 	cin >> NumOfStudents;
 	return NumOfStudents;
 }
+
+
 void AddStudents()
 {
 
 }
+
+
 void AddGrades()
 {
 
 }
+
+
 void DisplayStudent()
 {
 
 }
+
+
 void DisplayFinalGrade()
 {
 
 }
+ 
