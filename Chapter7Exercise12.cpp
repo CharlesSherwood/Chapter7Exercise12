@@ -102,35 +102,24 @@ void welcome()
 
 void GetInfo()
 {
-	const int Size = 50;
-	int Total = 0;
-	cout << "How Many Students Do You Have:" << endl;
-	string Name[Size];
-	Total++;
-	cout << "Please Enter The Name Of Student" << Total << endl;
-	for (int Index=0; Index < Size; Index++)
-	{
-		getline(cin, Name[Size]);
-		Name[Size] = Name[Index];
-		cout << Name[Index];
-	}
 	
-
 
 }
 
 
 int NumberOfStudents()
 {
-	int NumOfStudents;
-	cout << "How Many Students Will you beentering into the gradebook today: ";
-	cin >> NumOfStudents;
-	return NumOfStudents;
+	
 }
 
 
 void AddStudents()
 {
+	vector <string> Names[10];
+	for (int Index = 0; Index <Names->size(); Index++)
+	{
+		
+	}
 
 }
 
