@@ -187,7 +187,7 @@ void DisplayFinalGrade()
     }
 }
 
-
+ 
 //calculates what the srudents grade would be
 char calculateLetterGrade(double avg) 
 {
