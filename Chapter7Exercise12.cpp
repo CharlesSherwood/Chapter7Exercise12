@@ -47,7 +47,8 @@ void welcome()
 void Menu()
 {
     int choice;
-    do {
+    do 
+    {
         cout << "\nMenu:\n";
         cout << "1 - Add Students\n";
         cout << "2 - Add Grades\n";
@@ -57,7 +58,8 @@ void Menu()
         cout << "Enter your choice: ";
         cin >> choice;
 
-        switch (choice) {
+        switch (choice)
+        {
         case 1:
             AddStudents();
             break;
@@ -87,10 +89,12 @@ void AddStudents()
     cout << "Enter student names (type 'done' to finish):\n";
     cin.ignore();
 
-    while (true) {
+    while (true)
+    {
         getline(cin, name);
         if (name == "done") break;
-        if (!name.empty()) {
+        if (!name.empty()) 
+        {
             studentNames.push_back(name);
             studentGrades.push_back(vector<int>());
         }
@@ -100,21 +104,26 @@ void AddStudents()
 //allows you to add grades to students 
 void AddGrades() 
 {
-    if (studentNames.empty()) {
+    if (studentNames.empty())
+    {
         cout << "No students found. Please add students first.\n";
         return;
     }
 
-    for (int i = 0; i < studentNames.size(); ++i) {
+    for (int i = 0; i < studentNames.size(); ++i) 
+    {
         cout << "Enter grades for " << studentNames[i] << " (type -1 to stop):\n";
         int grade;
-        while (true) {
+        while (true) 
+        {
             cin >> grade;
             if (grade == -1) break;
-            if (grade >= 0 && grade <= 100) {
+            if (grade >= 0 && grade <= 100) 
+            {
                 studentGrades[i].push_back(grade);
             }
-            else {
+            else 
+            {
                 cout << "Invalid grade. Please enter a value between 0 and 100.\n";
             }
         }
@@ -125,18 +134,23 @@ void AddGrades()
 //Displays students and their grades
 void DisplayStudent() 
 {
-    if (studentNames.empty()) {
+    if (studentNames.empty()) 
+    {
         cout << "No students to display.\n";
         return;
     }
 
-    for (int i = 0; i < studentNames.size(); ++i) {
+    for (int i = 0; i < studentNames.size(); ++i) 
+    {
         cout << studentNames[i] << ": ";
-        if (studentGrades[i].empty()) {
+        if (studentGrades[i].empty())
+        {
             cout << "No grades entered.\n";
         }
-        else {
-            for (int grade : studentGrades[i]) {
+        else 
+        {
+            for (int grade : studentGrades[i]) 
+            {
                 cout << grade << " ";
             }
             cout << endl;
@@ -147,13 +161,16 @@ void DisplayStudent()
 //Displays the students and their averages 
 void DisplayFinalGrade() 
 {
-    if (studentNames.empty()) {
+    if (studentNames.empty()) 
+    {
         cout << "No students to display.\n";
         return;
     }
 
-    for (int i = 0; i < studentNames.size(); ++i) {
-        if (studentGrades[i].empty()) {
+    for (int i = 0; i < studentNames.size(); ++i)
+    {
+        if (studentGrades[i].empty())
+        {
             cout << studentNames[i] << ": No grades to calculate average.\n";
             continue;
         }
@@ -161,7 +178,8 @@ void DisplayFinalGrade()
         vector<int> grades = studentGrades[i];
 
         // Drop the lowest grade if more than one exists
-        if (grades.size() > 1) {
+        if (grades.size() > 1)
+        {
             int minGrade = *min_element(grades.begin(), grades.end());
             grades.erase(find(grades.begin(), grades.end(), minGrade));
         }
