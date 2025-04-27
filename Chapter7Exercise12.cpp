@@ -4,140 +4,185 @@ Date:4/2025
 Requirements:This Program Should Act A Gradebook and let you
 store and calculate students grades.
 */
-#include<vector>
+
 #include <iostream>
-#include<iomanip>
-#include<string>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <algorithm>
 using namespace std;
 
 
+vector<string> studentNames;
+vector<vector<int>> studentGrades;
+
+// Function prototypes
 void welcome();
-void GetInfo();
-int NumberOfStudents();
-int Menu();
+void Menu();
 void AddStudents();
 void AddGrades();
 void DisplayStudent();
 void DisplayFinalGrade();
+char calculateLetterGrade(double avg);
 
 
-int main()
+
+//Main that calls the other modules
+int main() 
 {
-
-	welcome();
-	Menu();
-
-	int NumOfstudents = NumberOfStudents();
-	GetInfo();
-
-
-
-
-
-
+    welcome();
+    Menu();
+    return 0;
 }
 
-
-int Menu()
-{
-	int Choice;
-	do
-	{
-		cout << "1-Add Students\n";
-		cout << "2-Add Grades\n";
-		cout << "3-Display Student Name and Grade\n";
-		cout << "4-Display Final Grade Average\n";
-		cout << "5-Exit The Program.\n";
-		cin >> Choice;
-
-		switch (Choice)
-		{
-		case 1:
-		{
-			AddStudents();
-		}
-		break;
-		case 2:
-		{
-
-			AddGrades();
-		}
-		break;
-		case 3:
-		{
-			DisplayStudent();
-
-		}
-		break;
-		case 4:
-		{
-			DisplayFinalGrade();
-		}
-		break;
-		default:
-		{
-			cout << "Please Enter A Valid Option\n";
-			cin >> Choice;
-			while (Choice < 1 || Choice>5)
-			{
-				cout << "Please Enter A Valid Option\n";
-			}
-		}
-
-
-
-		}
-	} while (Choice != 5);
-}
-
-
-
+//Displays A welcome message
 void welcome()
 {
-	cout << "--------------------------------------\n";
-	cout << "!!!Welcome To The Student Gradebook!!!";
-	cout << "--------------------------------------\n";
-
+    cout << "--------------------------------------\n";
+    cout << "!!! Welcome To The Student Gradebook !!!\n";
+    cout << "--------------------------------------\n\n";
 }
 
-void GetInfo()
+//Displays the menu and gets the user input for their choice Sends them to different modules
+void Menu()
 {
-	
+    int choice;
+    do {
+        cout << "\nMenu:\n";
+        cout << "1 - Add Students\n";
+        cout << "2 - Add Grades\n";
+        cout << "3 - Display Student Name and Grades\n";
+        cout << "4 - Display Final Grade Average\n";
+        cout << "5 - Exit the Program\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
+        switch (choice) {
+        case 1:
+            AddStudents();
+            break;
+        case 2:
+            AddGrades();
+            break;
+        case 3:
+            DisplayStudent();
+            break;
+        case 4:
+            DisplayFinalGrade();
+            break;
+        case 5:
+            cout << "Exiting program. Goodbye!\n";
+            break;
+        default:
+            cout << "Please enter a valid option (1–5).\n";
+        }
+    } while (choice != 5);
 }
 
 
-int NumberOfStudents()
+//Adds students to the gradebook
+void AddStudents() 
 {
-	
+    string name;
+    cout << "Enter student names (type 'done' to finish):\n";
+    cin.ignore();
+
+    while (true) {
+        getline(cin, name);
+        if (name == "done") break;
+        if (!name.empty()) {
+            studentNames.push_back(name);
+            studentGrades.push_back(vector<int>());
+        }
+    }
 }
 
-
-void AddStudents()
+//allows you to add grades to students 
+void AddGrades() 
 {
-	vector <string> Names[10];
-	for (int Index = 0; Index <Names->size(); Index++)
-	{
-		
-	}
+    if (studentNames.empty()) {
+        cout << "No students found. Please add students first.\n";
+        return;
+    }
 
+    for (int i = 0; i < studentNames.size(); ++i) {
+        cout << "Enter grades for " << studentNames[i] << " (type -1 to stop):\n";
+        int grade;
+        while (true) {
+            cin >> grade;
+            if (grade == -1) break;
+            if (grade >= 0 && grade <= 100) {
+                studentGrades[i].push_back(grade);
+            }
+            else {
+                cout << "Invalid grade. Please enter a value between 0 and 100.\n";
+            }
+        }
+    }
 }
 
 
-void AddGrades()
+//Displays students and their grades
+void DisplayStudent() 
 {
+    if (studentNames.empty()) {
+        cout << "No students to display.\n";
+        return;
+    }
 
+    for (int i = 0; i < studentNames.size(); ++i) {
+        cout << studentNames[i] << ": ";
+        if (studentGrades[i].empty()) {
+            cout << "No grades entered.\n";
+        }
+        else {
+            for (int grade : studentGrades[i]) {
+                cout << grade << " ";
+            }
+            cout << endl;
+        }
+    }
 }
 
-
-void DisplayStudent()
+//Displays the students and their averages 
+void DisplayFinalGrade() 
 {
+    if (studentNames.empty()) {
+        cout << "No students to display.\n";
+        return;
+    }
 
+    for (int i = 0; i < studentNames.size(); ++i) {
+        if (studentGrades[i].empty()) {
+            cout << studentNames[i] << ": No grades to calculate average.\n";
+            continue;
+        }
+
+        vector<int> grades = studentGrades[i];
+
+        // Drop the lowest grade if more than one exists
+        if (grades.size() > 1) {
+            int minGrade = *min_element(grades.begin(), grades.end());
+            grades.erase(find(grades.begin(), grades.end(), minGrade));
+        }
+
+        double sum = 0;
+        for (int grade : grades) sum += grade;
+        double avg = grades.empty() ? 0 : sum / grades.size();
+
+        cout << studentNames[i] << " Final Average: "
+            << fixed << setprecision(2) << avg
+            << " (" << calculateLetterGrade(avg) << ")\n";
+    }
 }
 
 
-void DisplayFinalGrade()
+//calculates what the srudents grade would be
+char calculateLetterGrade(double avg) 
 {
-
+    if (avg >= 90) return 'A';
+    if (avg >= 80) return 'B';
+    if (avg >= 70) return 'C';
+    if (avg >= 60) return 'D';
+    return 'F';
 }
- 
