@@ -2,7 +2,8 @@
 ProgrammerName:Charles Sherwood
 Date:4/2025
 Requirements:This Program Should Act A Gradebook and let you
-store and calculate students grades.
+store and calculate students grades. This program should now drop the lowest 
+grade the student has.
 */
 
 #include <iostream>
