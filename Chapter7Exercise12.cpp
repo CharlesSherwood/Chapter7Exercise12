@@ -101,6 +101,7 @@ void AddStudents()
     }
 }
 
+
 //allows you to add grades to students 
 void AddGrades() 
 {
@@ -176,14 +177,6 @@ void DisplayFinalGrade()
         }
 
         vector<int> grades = studentGrades[i];
-
-        // Drop the lowest grade if more than one exists
-        if (grades.size() > 1)
-        {
-            int minGrade = *min_element(grades.begin(), grades.end());
-            grades.erase(find(grades.begin(), grades.end(), minGrade));
-        }
-
         double sum = 0;
         for (int grade : grades) sum += grade;
         double avg = grades.empty() ? 0 : sum / grades.size();
